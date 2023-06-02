@@ -8,14 +8,13 @@ export async function getLink(req, res) {
     try {
         const { link } = req.body;
          
-        const encodedUrl = encodeURIComponent(link);
         const options = {
             hostname: 'shopee.vn',
             path: '/api/v4/pages/get_category_tree',
             method: 'GET',
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-                'Referer': encodedUrl,
+                'Referer': link,
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-Shopee-Language': 'vi',
                 'X-Api-Source': 'pc'
@@ -29,7 +28,7 @@ export async function getLink(req, res) {
                 data += d;
             });
             res1.on('end', () => {
-                console.log(data)
+                console.log(link)
                 res.status(200).json({ data: JSON.parse(data) });
             });
         });
